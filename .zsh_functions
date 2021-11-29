@@ -1,0 +1,100 @@
+source ~/.env.sh
+
+alias ll="ls -la"
+alias lt="ls -lat"
+
+alias watch="watch --color "
+
+function timestamp() {
+	echo '('`date +"%s.%N"` ' * 1000000)/1' | bc
+}
+function dev() {
+        cd ~/workspaces/$1
+}
+
+alias myip="ip addr | grep enp"
+
+### git ###
+alias clone="git clone"
+alias gs="clustergit"
+alias clean-branches='git branch | egrep -v "(master|develop|development|\*)" | xargs git branch -D'
+alias gbDA=clean-branches
+
+
+alias gpff="git push --no-verify -f"
+alias gpn="git push --no-verify"
+
+function port() {
+	lsof -i ":$1"
+}
+
+### k8s kubectl helpers ###
+# kubectl short cuts
+alias kube="kubectl"
+alias kuben="kubectl -n"
+alias kweb="kubectl -n web"
+alias kdev="kubectl config use-context gdev"
+alias kstage="kubectl config use-context gstage"
+alias kprod="kubectl config use-context gprod"
+
+function pods() {
+	MY_ENV=${1:-web}
+	kube -n $MY_ENV get pods
+}
+
+function fw-mmb() {
+	MY_ENV=${1:-web}
+	MY_POD=$(kube -n $MY_ENV get pods | grep manage-my | cut -d' ' -f1)
+	echo "Forwarding to MMB pod $MY_POD in namespace $MY_ENV"
+	kube -n $MY_ENV port-forward $MY_POD 23080
+}
+
+function podsw() {
+        MY_ENV=${1:-web}
+        watch "kubectl 
+        -n $MY_ENV get pods"
+}
+function svc() {
+	MY_ENV=${1:-web}
+	kube -n $MY_ENV get services
+}
+alias services=svc
+
+function babs-logs() {
+	mkdir /tmp/backoffice
+	MY_PODS=$(kube -n backoffice get pods | grep backoffice- | cut -d' ' -f1)
+	while IFS='\n' read -r pod
+	do
+	echo $pod
+		echo downloading $pod
+		kubectl cp backoffice/$pod:/srv/backoffice-collector/logs/backoffice.log -c backoffice-collector /tmp/backoffice/$pod-collector.txt
+		kubectl cp backoffice/$pod:/srv/backoffice-admin/logs/backoffice.log -c backoffice-admin /tmp/backoffice/$pod-admin.txt
+	done <<< $MY_PODS
+}
+
+### gitops flux functions ####
+function flux-validate() {
+	for i in $(git diff --cached --name-only)
+	do
+		kubectl apply --dry-run=true --validate=true -f $i
+	done
+}
+
+function test() {
+	if [ ${PWD##*/} = flux ] 
+	then
+		for i in $(git diff --cached --name-only)
+		do
+	        	kubectl apply --dry-run=true --validate=true -f $i
+    		done
+	fi
+}
+
+function java11() {
+	sudo archlinux-java set java-11-graalvm
+	export JAVA_HOME=/usr/lib/jvm/java-11-graalvm
+}
+function java8() {
+	sudo archlinux-java set java-8-openjdk
+	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+}

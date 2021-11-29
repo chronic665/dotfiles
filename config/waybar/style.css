@@ -1,0 +1,134 @@
+* {
+    border: none;
+    border-radius: 0;
+    /* font-family: "Ubuntu Nerd Font"; */
+    font-family: RobotoMono Nerd Font;
+    font-size: 14px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    text-shadow: none;
+    transition-duration: 0s;
+    color: rgba(217, 216, 216, 1);
+    background: rgba(0, 0, 0, 0.80);
+}
+
+#window {
+    font-weight: bold;
+    /* font-family: "Ubuntu"; */
+    font-family: "Ubuntu Nerd Font";
+}
+
+#workspaces {
+    /* padding: 0 5px; */
+    margin: 0 5px;
+}
+
+#workspaces button {
+    /* padding: 0 5px;
+    background: transparent;
+    color: white;
+    border-top: 2px solid transparent; */
+
+    padding: 0 8px;
+    color: rgba(217, 216, 216, 0.4);
+    border: 3px solid rgba(217, 216, 216, 0);
+    border-radius: 10px;
+}
+
+#workspaces button.focused {
+    color: #c9545d;
+    border-top: 2px solid #c9545d;
+}
+
+#workspaces button:hover {
+    box-shadow: inherit;
+    border-color: #b4b4b6;
+    color: #888888;
+}
+
+#mode {
+    background: #64727D;
+    border-bottom: 3px solid white;
+}
+
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #tray, #mode {
+    padding: 0 3px;
+    margin: 0 2px;
+}
+
+#clock {
+    font-weight: bold;
+}
+
+#battery icon {
+    color: red;
+}
+
+#battery.warning {
+    color: rgba(255, 210, 4, 1);
+}
+
+#battery.critical {
+    color: rgba(238, 46, 36, 1);
+}
+
+#battery.charging {
+    color: rgba(217, 216, 216, 1);
+}
+
+#tray,
+#mode,
+#battery,
+#temperature,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#idle_inhibitor,
+#sway-language,
+#backlight,
+#custom-storage,
+#custom-cpu_speed,
+#custom-powermenu,
+#custom-spotify,
+#custom-weather,
+#custom-mail,
+#custom-media {
+    margin: 0px 0px 0px 10px;
+    padding: 0 5px;
+    /* border-top: 3px solid rgba(217, 216, 216, 0.5); */
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#battery.warning:not(.charging) {
+    color: white;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#network.disconnected {
+    background: #f53c3c;
+}
+
+#pulseaudio.muted {
+}
+
+#custom-spotify {
+    color: rgb(102, 220, 105);
+}
+

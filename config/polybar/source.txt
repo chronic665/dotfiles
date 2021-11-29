@@ -1,0 +1,1 @@
+https://github.com/jaagr/dots/tree/master/.local/etc/themer/themes
