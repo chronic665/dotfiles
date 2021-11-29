@@ -94,4 +94,5 @@ source $ZSH/oh-my-zsh.sh
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 source ~/.zsh_functions
+source ~/.zprofile
 eval $(thefuck --alias)
