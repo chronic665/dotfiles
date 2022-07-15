@@ -13,7 +13,7 @@ ln -s ~/dotfiles/config/sway sway
 ln -s ~/dotfiles/config/waybar waybar
 
 # I3
-#ln -s ~/dotfiles/config/i3 i3
+ln -s ~/dotfiles/config/i3 i3
 ln -s ~/dotfiles/config/polybar polybar
 
 
